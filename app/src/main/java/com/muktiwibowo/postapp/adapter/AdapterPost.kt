@@ -37,12 +37,12 @@ class HolderPost(private val binding: HolderPostBinding, private val listenerPos
 
             /* redirect to post detail */
             root.setOnClickListener {
-                listenerPost?.onClickPost(postItem)
+                listenerPost?.onClickPost(adapterPosition, postItem)
             }
         }
     }
 }
 
 interface ListenerPost {
-    fun onClickPost(postItem: DataPost)
+    fun onClickPost(index: Int, postItem: DataPost)
 }

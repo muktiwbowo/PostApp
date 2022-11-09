@@ -1,5 +1,6 @@
 package com.muktiwibowo.postapp.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.muktiwibowo.postapp.adapter.AdapterPost
@@ -37,8 +38,11 @@ class ActivityPost : AppCompatActivity() {
 
     private fun onViewNavigate() {
         adapterPost.listenerPost = object : ListenerPost {
-            override fun onClickPost(postItem: DataPost) {
+            override fun onClickPost(index: Int, postItem: DataPost) {
                 /* redirect to post detail */
+                startActivity(Intent(this@ActivityPost, ActivityPostDetail::class.java).apply {
+                    putExtra("index", index)
+                })
             }
         }
     }
