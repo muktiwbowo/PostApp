@@ -14,16 +14,18 @@ import com.muktiwibowo.postapp.data.DataUser
  * email: muktiwbowo@gmail.com
  */
 
-@Database(entities = [DataUser::class], version = 1)
+@Database(entities = [DataUser::class], version = 1, exportSchema = false)
 abstract class ServiceRoom : RoomDatabase() {
     abstract fun userDao(): UserDao
+    companion object{
+        fun instance(context: Context) =
+            Room.databaseBuilder(
+                context,
+                ServiceRoom::class.java,
+                "db_post"
+            ).build()
+    }
 
-    fun instance(context: Context) =
-        Room.databaseBuilder(
-            context,
-            ServiceRoom::class.java,
-            "db_post"
-        ).build()
 }
 
 @Dao
@@ -32,5 +34,5 @@ interface UserDao {
     fun getUsers(): List<DataUser>
 
     @Insert
-    fun insertUsers(vararg list: List<DataUser>)
+    fun insertUsers(vararg user: DataUser)
 }
