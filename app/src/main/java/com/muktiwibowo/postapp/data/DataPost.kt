@@ -8,7 +8,14 @@ data class DataPost(
     var userName: String,
     var userAvatar: String,
     var userPost: String,
-    var createdAt: String
+    var createdAt: String,
+    var id: String? = "",
+    var position: Int? = 0,
+    var ownerId: String? = "",
+    var createdDate: String? = "",
+    var textContent: String? = "",
+    var mediaContentPath: String? = "",
+    var tagIds: List<String>? = listOf(),
 )
 
 val dummyPosts = listOf(
