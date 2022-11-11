@@ -1,5 +1,6 @@
 package com.muktiwibowo.postapp.service
 
+import com.muktiwibowo.postapp.data.DataPost
 import com.muktiwibowo.postapp.data.DataUser
 import okhttp3.OkHttpClient
 import retrofit2.Response
@@ -27,5 +28,5 @@ interface API {
     @GET("posts/{page_number}")
     suspend fun getPosts(
         @Path("page_number") pageNumber: String
-    ): Response<List<DataUser>>
+    ): Response<List<DataPost>>
 }
