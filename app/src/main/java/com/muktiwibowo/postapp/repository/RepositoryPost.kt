@@ -2,8 +2,10 @@ package com.muktiwibowo.postapp.repository
 
 import com.muktiwibowo.postapp.base.BaseResponse
 import com.muktiwibowo.postapp.data.DataPost
+import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.data.DataUser
 import com.muktiwibowo.postapp.service.API
+import com.muktiwibowo.postapp.service.PostUserDao
 import javax.inject.Inject
 
 /**
@@ -11,7 +13,8 @@ import javax.inject.Inject
  * email: muktiwbowo@gmail.com
  */
 class RepositoryPost @Inject constructor(
-    private val api: API
+    private val api: API,
+    private val dao: PostUserDao
 ) {
     suspend fun getUsers(): BaseResponse<List<DataUser>> {
         try {
@@ -41,4 +44,7 @@ class RepositoryPost @Inject constructor(
         }
     }
 
+    suspend fun insertPostUser(items: List<DataPostUser>) = dao.insertPostUser(items)
+
+    fun getPostUser() = dao.getPostUser()
 }

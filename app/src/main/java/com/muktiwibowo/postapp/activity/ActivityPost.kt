@@ -77,5 +77,8 @@ class ActivityPost : AppCompatActivity() {
                 }
             }
         }
+        viewModelPost.getPostUser().observe(this) { items ->
+            println(items)
+        }
     }
 }

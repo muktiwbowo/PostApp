@@ -1,23 +1,24 @@
 package com.muktiwibowo.postapp.service
 
 import android.content.Context
-import androidx.room.Dao
-import androidx.room.Database
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.muktiwibowo.postapp.data.DataUser
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import androidx.room.OnConflictStrategy.REPLACE
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.muktiwibowo.postapp.data.DataPostUser
 
 /**
  * Created by Mukti Wibowo on 10 November 2022
  * email: muktiwbowo@gmail.com
  */
 
-@Database(entities = [DataUser::class], version = 1, exportSchema = false)
+@Database(entities = [DataPostUser::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class ServiceRoom : RoomDatabase() {
-    abstract fun userDao(): UserDao
-    companion object{
+    abstract fun postUserDao(): PostUserDao
+
+    companion object {
         fun instance(context: Context) =
             Room.databaseBuilder(
                 context,
@@ -29,10 +30,24 @@ abstract class ServiceRoom : RoomDatabase() {
 }
 
 @Dao
-interface UserDao {
-    @Query("SELECT * FROM users")
-    fun getUsers(): List<DataUser>
+interface PostUserDao {
+    @Query("SELECT * FROM tablePostUser")
+    fun getPostUser(): LiveData<List<DataPostUser>>
 
-    @Insert
-    fun insertUsers(vararg user: DataUser)
+    @Insert(onConflict = REPLACE)
+    suspend fun insertPostUser(items: List<DataPostUser>)
+}
+
+class Converter {
+    @TypeConverter
+    fun fromStringList(value: List<String>): String = Gson().toJson(value)
+
+    @TypeConverter
+    fun toStringList(value: String): List<String> {
+        return try {
+            Gson().fromJson(value, object : TypeToken<List<String>>() {}.type)
+        } catch (e: Exception) {
+            listOf()
+        }
+    }
 }

@@ -44,6 +44,7 @@ class ViewModelPost @Inject constructor(
                             lastName = user?.lastName ?: "",
                         )
                     }
+                    result?.let { insertPostUser(it) }
                     getPosts.value = BaseResponse.Success(data = result)
                 } else if (posts is BaseResponse.Error) {
                     getPosts.value =
@@ -56,9 +57,11 @@ class ViewModelPost @Inject constructor(
         }
     }
 
-//    private fun insertPostUser(items: List<DataPostUser>) {
-//        viewModelScope.launch {
-//            repositoryPost.insertPostUser(items)
-//        }
-//    }
+    private fun insertPostUser(items: List<DataPostUser>) {
+        viewModelScope.launch {
+            repositoryPost.insertPostUser(items)
+        }
+    }
+
+    fun getPostUser() = repositoryPost.getPostUser()
 }
