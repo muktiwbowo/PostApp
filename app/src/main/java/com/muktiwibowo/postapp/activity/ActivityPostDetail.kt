@@ -3,6 +3,8 @@ package com.muktiwibowo.postapp.activity
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.bumptech.glide.Glide
+import com.muktiwibowo.postapp.R
 import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.databinding.ActivityPostDetailBinding
 
@@ -32,6 +34,14 @@ class ActivityPostDetail : AppCompatActivity() {
                 )
                 tvUserPost.text = postDetail?.posts?.textContent
                 tvDate.text = postDetail?.posts?.createdDate
+                Glide.with(root.context)
+                    .load(postDetail?.users?.profileImagePath)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(ivUserAvatar)
+                Glide.with(root.context)
+                    .load(postDetail?.posts?.mediaContentPath)
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .into(ivPostImage)
             }
         }
     }

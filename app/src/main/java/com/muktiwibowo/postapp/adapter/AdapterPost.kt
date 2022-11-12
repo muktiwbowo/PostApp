@@ -3,6 +3,8 @@ package com.muktiwibowo.postapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.muktiwibowo.postapp.R
 import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.databinding.HolderPostBinding
 
@@ -36,6 +38,10 @@ class HolderPost(private val binding: HolderPostBinding, private val listenerPos
             )
             tvUserPost.text = postItem.posts.textContent
             tvDate.text = postItem.posts.createdDate
+            Glide.with(root.context)
+                .load(postItem.users?.profileImagePath)
+                .placeholder(R.drawable.ic_launcher_background)
+                .into(ivUserAvatar)
 
             /* redirect to post detail */
             root.setOnClickListener {
