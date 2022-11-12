@@ -1,9 +1,9 @@
 package com.muktiwibowo.postapp.activity
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.muktiwibowo.postapp.data.DataPost
-import com.muktiwibowo.postapp.data.dummyPosts
+import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.databinding.ActivityPostDetailBinding
 
 /**
@@ -12,7 +12,6 @@ import com.muktiwibowo.postapp.databinding.ActivityPostDetailBinding
  */
 class ActivityPostDetail : AppCompatActivity() {
     private lateinit var binding: ActivityPostDetailBinding
-    private var postItem: DataPost? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPostDetailBinding.inflate(layoutInflater)
@@ -21,15 +20,18 @@ class ActivityPostDetail : AppCompatActivity() {
     }
 
     private fun onViewBind() {
-        val index = intent.getIntExtra("index", 0)
-        postItem = dummyPosts[index]
+        val postDetail = if (Build.VERSION.SDK_INT >= 33) {
+            intent.getParcelableExtra("postDetail", DataPostUser::class.java)
+        } else {
+            intent.getParcelableExtra("postDetail")
+        }
         binding.apply {
             parentPost.apply {
-                postItem?.let { item ->
-                    tvUserName.text = item.userName
-                    tvUserPost.text = item.userPost
-                    tvDate.text = item.createdAt
-                }
+                tvUserName.text = String.format(
+                    "%s %s", postDetail?.users?.firstName, postDetail?.users?.lastName
+                )
+                tvUserPost.text = postDetail?.posts?.textContent
+                tvDate.text = postDetail?.posts?.createdDate
             }
         }
     }

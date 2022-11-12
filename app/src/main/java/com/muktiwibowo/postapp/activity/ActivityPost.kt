@@ -46,7 +46,7 @@ class ActivityPost : AppCompatActivity() {
             override fun onClickPost(index: Int, postItem: DataPostUser) {
                 /* redirect to post detail */
                 startActivity(Intent(this@ActivityPost, ActivityPostDetail::class.java).apply {
-                    putExtra("index", index)
+                    putExtra("postDetail", postItem)
                 })
             }
         }
