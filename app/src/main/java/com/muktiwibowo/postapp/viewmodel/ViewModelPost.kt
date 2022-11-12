@@ -70,7 +70,7 @@ class ViewModelPost @Inject constructor(
         return if (!result.isNullOrEmpty()) result else listOf()
     }
 
-    private fun insertPostUser(items: List<DataPostUser>) {
+    fun insertPostUser(items: List<DataPostUser>) {
         viewModelScope.launch {
             repositoryPost.insertPostUser(items)
         }

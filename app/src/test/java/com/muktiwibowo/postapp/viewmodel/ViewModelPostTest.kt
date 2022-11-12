@@ -1,6 +1,7 @@
 package com.muktiwibowo.postapp.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.repository.RepositoryPost
 import junit.framework.TestCase
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -13,10 +14,10 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.junit.MockitoJUnitRunner
-
 
 /**
  * Created by Mukti Wibowo on 12 November 2022
@@ -49,6 +50,13 @@ class ViewModelPostTest: TestCase(){
     fun `testGetPost called once`() = runTest {
         viewModelPost.getPosts()
         verify(repositoryPost, times(1)).getPosts()
+    }
+
+    @Test
+    fun `testInsertPostUser success`() = runTest {
+        val dataPostUser = Mockito.mock(DataPostUser::class.java)
+        viewModelPost.insertPostUser(listOf(dataPostUser))
+        verify(repositoryPost, times(1)).insertPostUser(listOf(dataPostUser))
     }
 
     @After
