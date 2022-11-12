@@ -1,9 +1,13 @@
 package com.muktiwibowo.postapp.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 /**
  * Created by Mukti Wibowo on 09 November 2022
  * email: muktiwbowo@gmail.com
  */
+@Parcelize
 data class DataPost(
     var userName: String,
     var userAvatar: String,
@@ -16,7 +20,7 @@ data class DataPost(
     var textContent: String? = "",
     var mediaContentPath: String? = "",
     var tagIds: List<String>? = listOf(),
-)
+): Parcelable
 
 val dummyPosts = listOf(
     DataPost(
