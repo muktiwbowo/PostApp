@@ -3,7 +3,7 @@ package com.muktiwibowo.postapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.muktiwibowo.postapp.data.DataPost
+import com.muktiwibowo.postapp.data.DataPostUser
 import com.muktiwibowo.postapp.databinding.HolderPostBinding
 
 /**
@@ -11,7 +11,7 @@ import com.muktiwibowo.postapp.databinding.HolderPostBinding
  * email: muktiwbowo@gmail.com
  */
 class AdapterPost : RecyclerView.Adapter<HolderPost>() {
-    var posts = mutableListOf<DataPost>()
+    var posts = mutableListOf<DataPostUser>()
     var listenerPost: ListenerPost? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HolderPost {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,12 +28,14 @@ class AdapterPost : RecyclerView.Adapter<HolderPost>() {
 
 class HolderPost(private val binding: HolderPostBinding, private val listenerPost: ListenerPost?) :
     RecyclerView.ViewHolder(binding.root) {
-    fun onViewBind(postItem: DataPost) {
+    fun onViewBind(postItem: DataPostUser) {
         binding.apply {
             /* populate data */
-            tvUserName.text = postItem.userName
-            tvUserPost.text = postItem.userPost
-            tvDate.text = postItem.createdAt
+            tvUserName.text = String.format(
+                "%s %s", postItem.users?.firstName, postItem.users?.lastName
+            )
+            tvUserPost.text = postItem.posts.textContent
+            tvDate.text = postItem.posts.createdDate
 
             /* redirect to post detail */
             root.setOnClickListener {
@@ -44,5 +46,5 @@ class HolderPost(private val binding: HolderPostBinding, private val listenerPos
 }
 
 interface ListenerPost {
-    fun onClickPost(index: Int, postItem: DataPost)
+    fun onClickPost(index: Int, postItem: DataPostUser)
 }
