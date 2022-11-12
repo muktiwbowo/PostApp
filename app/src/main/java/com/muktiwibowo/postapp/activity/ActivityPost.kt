@@ -38,7 +38,7 @@ class ActivityPost : AppCompatActivity() {
         binding.rvPost.adapter = adapterPost
 
         /* call api */
-        viewModelPost.getUsers()
+        viewModelPost.getPosts()
     }
 
     private fun onViewNavigate() {

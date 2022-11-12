@@ -22,7 +22,7 @@ class ViewModelPost @Inject constructor(
     private val repositoryPost: RepositoryPost
 ) : ViewModel() {
     val getPosts = MutableLiveData<BaseResponse<List<DataPostUser>>>()
-    fun getUsers() {
+    fun getPosts() {
         viewModelScope.launch {
             getPosts.value = BaseResponse.Loading()
             val jobUser = async { repositoryPost.getUsers() }
