@@ -22,6 +22,7 @@ class ActivityPost : AppCompatActivity() {
     private lateinit var binding: ActivityPostBinding
     private lateinit var adapterPost: AdapterPost
     private val viewModelPost by viewModels<ViewModelPost>()
+    private var items = listOf<DataPostUser>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class ActivityPost : AppCompatActivity() {
         binding.rvPost.adapter = adapterPost
 
         /* call api */
-        viewModelPost.getPosts()
+        if (items.isEmpty()) viewModelPost.getPosts()
     }
 
     private fun onViewNavigate() {
@@ -64,11 +65,7 @@ class ActivityPost : AppCompatActivity() {
                     val listPost = response.data
                     /*load data*/
                     listPost?.let { items ->
-                        adapterPost.apply {
-                            posts.clear()
-                            posts.addAll(items)
-                            notifyItemRangeChanged(0, itemCount)
-                        }
+                        onDataPopulated(items)
                     }
                 }
                 is BaseResponse.Error -> {
@@ -78,7 +75,16 @@ class ActivityPost : AppCompatActivity() {
             }
         }
         viewModelPost.getPostUser().observe(this) { items ->
-            println(items)
+            this.items = items
+            onDataPopulated(items)
+        }
+    }
+
+    private fun onDataPopulated(items: List<DataPostUser>){
+        adapterPost.apply {
+            posts.clear()
+            posts.addAll(items)
+            notifyItemRangeChanged(0, itemCount)
         }
     }
 }
