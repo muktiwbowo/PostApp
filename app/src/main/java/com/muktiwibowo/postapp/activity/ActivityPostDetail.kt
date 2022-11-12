@@ -30,16 +30,16 @@ class ActivityPostDetail : AppCompatActivity() {
         binding.apply {
             parentPost.apply {
                 tvUserName.text = String.format(
-                    "%s %s", postDetail?.users?.firstName, postDetail?.users?.lastName
+                    "%s %s", postDetail?.firstName, postDetail?.lastName
                 )
-                tvUserPost.text = postDetail?.posts?.textContent
-                tvDate.text = postDetail?.posts?.createdDate
+                tvUserPost.text = postDetail?.textContent
+                tvDate.text = postDetail?.createdDate
                 Glide.with(root.context)
-                    .load(postDetail?.users?.profileImagePath)
+                    .load(postDetail?.profileImagePath)
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(ivUserAvatar)
                 Glide.with(root.context)
-                    .load(postDetail?.posts?.mediaContentPath)
+                    .load(postDetail?.mediaContentPath)
                     .placeholder(R.drawable.ic_launcher_background)
                     .into(ivPostImage)
             }

@@ -34,12 +34,12 @@ class HolderPost(private val binding: HolderPostBinding, private val listenerPos
         binding.apply {
             /* populate data */
             tvUserName.text = String.format(
-                "%s %s", postItem.users?.firstName, postItem.users?.lastName
+                "%s %s", postItem.firstName, postItem.lastName
             )
-            tvUserPost.text = postItem.posts.textContent
-            tvDate.text = postItem.posts.createdDate
+            tvUserPost.text = postItem.textContent
+            tvDate.text = postItem.createdDate
             Glide.with(root.context)
-                .load(postItem.users?.profileImagePath)
+                .load(postItem.profileImagePath)
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(ivUserAvatar)
 

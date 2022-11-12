@@ -32,7 +32,17 @@ class ViewModelPost @Inject constructor(
             withContext(Dispatchers.Main) {
                 if (users is BaseResponse.Success && posts is BaseResponse.Success) {
                     val result = posts.data?.map { post ->
-                        DataPostUser(post, users.data?.filter { it.id == post.ownerId }?.get(0))
+                        val user = users.data?.filter { it.id == post.ownerId }?.get(0)
+                        DataPostUser(
+                            id = post.id ?: "",
+                            createdDate = post.createdDate,
+                            textContent = post.textContent,
+                            mediaContentPath = post.mediaContentPath,
+                            tagIds = post.tagIds,
+                            profileImagePath = user?.profileImagePath ?: "",
+                            firstName = user?.firstName ?: "",
+                            lastName = user?.lastName ?: "",
+                        )
                     }
                     getPosts.value = BaseResponse.Success(data = result)
                 } else if (posts is BaseResponse.Error) {
@@ -45,4 +55,10 @@ class ViewModelPost @Inject constructor(
             }
         }
     }
+
+//    private fun insertPostUser(items: List<DataPostUser>) {
+//        viewModelScope.launch {
+//            repositoryPost.insertPostUser(items)
+//        }
+//    }
 }

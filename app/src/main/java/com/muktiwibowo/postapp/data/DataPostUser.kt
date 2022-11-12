@@ -1,6 +1,8 @@
 package com.muktiwibowo.postapp.data
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
 /**
@@ -8,7 +10,15 @@ import kotlinx.parcelize.Parcelize
  * email: muktiwbowo@gmail.com
  */
 @Parcelize
+@Entity(tableName = "tablePostUser")
 data class DataPostUser(
-    val posts: DataPost,
-    val users: DataUser?
+    @PrimaryKey
+    val id: String,
+    var createdDate: String? = "",
+    var textContent: String? = "",
+    var mediaContentPath: String? = "",
+    var tagIds: List<String>? = listOf(),
+    var profileImagePath: String,
+    var firstName: String,
+    var lastName: String
 ): Parcelable
